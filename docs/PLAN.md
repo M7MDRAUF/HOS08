@@ -104,12 +104,33 @@ Driven through the already-authenticated Azure portal in the browser.
 
 ## Phase 8 — Cleanup (Doc section B, steps 25–28)
 
-> Destructive and irreversible. **Runs only after the student confirms**, and only after every screenshot in Phases 2–5 is captured.
+- [x] **8.1** Student confirmed teardown may proceed
+- [x] **8.2** Azure Portal → Static Web Apps → `HOS08` → **Delete** → **Yes**; screenshot 26
+- [x] **8.3** Verified the Static Web App is gone — portal lists "No static web apps to display" (screenshot 27) and both the production and staging hostnames return HTTP 404
+- [ ] **8.4** Delete the now-empty resource group `HOS08_group` — **not completed**, see below
 
-- [ ] **8.1** Confirm with the student that teardown may proceed
-- [ ] **8.2** Azure Portal → Static Web Apps → `HOS08` → **Delete** → **Yes**; screenshot
-- [ ] **8.3** Delete resource group `HOS08_group` so nothing bills
-- [ ] **8.4** Screenshot: resource list empty
+### Open item: the empty `HOS08_group` resource group
+
+The Static Web App itself is deleted, which is what steps 25–28 require and the only
+part that could consume the subscription. The empty resource group that contained it
+is still listed (screenshot 28).
+
+Two portal delete attempts did not take effect. The first failed because the
+confirmation textbox was filled programmatically, which did not trigger the blade's
+validation, so the **Delete** button was still disabled when clicked. The second
+attempt typed the name key-by-key, the button became enabled, and the click registered
+— but the group still appears after several minutes and repeated reloads, and the
+portal's notifications panel reported nothing at all. The resource-group row's context
+menu offers no delete action, so there is no alternative portal route.
+
+A plausible explanation, untested: the resource group's own location is **Central US**,
+the same region this subscription's policy blocks (see the `RequestDisallowedByAzure`
+failure in Phase 2). A policy denying operations in that region could be rejecting the
+delete silently.
+
+An empty resource group carries no cost. Deleting it needs either Azure CLI
+(`az group delete -n HOS08_group --yes`, which surfaces the real error) or a retry from
+the portal later.
 
 ---
 

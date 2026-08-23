@@ -5,9 +5,13 @@ pipeline. Built for CS504 (Software Engineering) at City University of Seattle.
 
 **Author:** Mohammad Ra'uf Naser Al Batayneh (`M7MDRAUF`)
 
+> **The Azure resource has been deleted.** Steps 25–28 of the handout require tearing it
+> down after the demonstration, so the live URL below no longer resolves. Sections 7 and 8
+> of the report, and screenshots `24`–`28`, capture the site working and then removed.
+
 | | |
 |---|---|
-| **Live site** | https://ashy-mushroom-075b8701e.7.azurestaticapps.net |
+| **Live site** (deleted) | https://ashy-mushroom-075b8701e.7.azurestaticapps.net |
 | **Azure resource** | Static Web App `HOS08` in resource group `HOS08_group` |
 | **Hosting plan** | Free |
 | **Region** | West US 2 (Functions API and staging environments) |
@@ -81,6 +85,23 @@ Screenshots [`11`](screenshots/11-azure-validation-failed-policy.png),
 [`12`](screenshots/12-azure-advanced-region-westus2.png) and
 [`13`](screenshots/13-azure-validation-passed.png) capture the failure, the fix, and
 the passing validation.
+
+## Teardown
+
+The Static Web App was deleted after the demonstration, as the handout requires. Both the
+production and staging hostnames return HTTP 404, and the portal's Static Web Apps blade
+reports no resources.
+
+One loose end: the now-empty `HOS08_group` resource group is still listed. Two portal
+delete attempts had no effect and produced no notification, and the resource-group row
+offers no delete action in its context menu. A likely but untested explanation is that the
+resource group's own location is Central US — the region this subscription's policy
+refuses — so the delete may be denied by the same policy. An empty resource group costs
+nothing; removing it needs the Azure CLI, which reports the real error:
+
+```bash
+az group delete --name HOS08_group --yes
+```
 
 ## Repository layout
 
