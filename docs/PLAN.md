@@ -1,0 +1,124 @@
+# HOS08A — CI/CD with Azure Static Web Apps · Mission Plan
+
+**Student:** Mohammad Ra'uf Naser Al Batayneh (`M7MDRAUF`)
+**Course:** CS504 — Software Engineering, City University of Seattle
+**Goal:** Deploy a static website to Azure Static Web Apps wired to a GitHub Actions CI/CD pipeline, prove the pipeline works by shipping a change through a `development` → `main` pull request, then tear the Azure resource down.
+
+**Deliverable repos**
+| Purpose | Repo |
+|---|---|
+| Source + pipeline | https://github.com/M7MDRAUF/HOS08 (public) |
+| University submission | https://github.com/cityuseattle/cs504-hos08-M7MDRAUF (private) |
+
+---
+
+## Global Constraints
+
+Values taken verbatim from the screenshots embedded in `HOS08A - CICD.docx`:
+
+| Setting | Value |
+|---|---|
+| Subscription | Azure for Students |
+| Resource Group | `HOS08_group` (new) |
+| Static Web App name | `HOS08` |
+| Plan type | **Free: For hobby or personal projects** — any other tier incurs charges |
+| Region (Functions/staging) | West US 2 |
+| Deployment source | GitHub |
+| Organization | `M7MDRAUF` |
+| Repository | `HOS08` |
+| Branch | `main` |
+| Build preset | HTML |
+| App location | `/` |
+| Api location | *(empty)* |
+| Output location | `/` |
+
+**Authorship:** every commit is authored by the student only. No AI co-author trailers anywhere.
+**Evidence:** every step gets a screenshot in `screenshots/`, numbered in execution order.
+
+---
+
+## Phase 0 — Recon & Workspace
+
+- [x] Extract `HOS08A - CICD.docx` text and all 26 embedded screenshots
+- [x] Read the Azure config screenshots to pin down exact field values
+- [x] Verify tooling: git 2.55, gh 2.98 (authed as `M7MDRAUF`, scopes `repo`+`workflow`), Node 24.10
+- [x] Confirm `M7MDRAUF/HOS08` exists and is empty; confirm university repo is reachable
+- [x] Clone repo to `3COURSES/HOS08`, set git identity to the student
+
+## Phase 1 — Create the Static Website (Doc section A)
+
+- [ ] **1.1** Create `index.html` containing `<h1>Hello<h1>`
+- [ ] **1.2** Add a `README.md` describing the project
+- [ ] **1.3** Commit and push to `main`
+- [ ] **1.4** Screenshot: repo on GitHub showing `index.html`
+
+## Phase 2 — Create the Azure Static Web App (Doc section B, steps 1–13)
+
+Driven through the already-authenticated Azure portal in the browser.
+
+- [ ] **2.1** Screenshot: Azure portal home (signed in)
+- [ ] **2.2** Search "Static" → open **Static Web Apps**
+- [ ] **2.3** Click **Create**; fill Project Details + Static Web App details per Global Constraints
+- [ ] **2.4** Screenshot: the filled Basics blade
+- [ ] **2.5** Sign in / authorize `Azure-App-Service-Static-Web-Apps` against GitHub
+- [ ] **2.6** Fill Deployment details: Organization / Repository / Branch
+- [ ] **2.7** Fill Build Details: preset HTML, app `/`, output `/`
+- [ ] **2.8** Screenshot: the filled Deployment configuration blade
+- [ ] **2.9** **Review + create** → screenshot validation page → **Create**
+- [ ] **2.10** Screenshot: "Your deployment is complete"
+
+## Phase 3 — First Pipeline Run (Doc section B, steps 14–15)
+
+- [ ] **3.1** **Go to resource**; screenshot the Overview blade with the generated URL
+- [ ] **3.2** Confirm Azure committed `.github/workflows/azure-static-web-apps-*.yml` to `main`
+- [ ] **3.3** Screenshot: GitHub Actions run for the workflow file commit
+- [ ] **3.4** Open the live URL; screenshot the rendered `Hello` page
+
+## Phase 4 — Exercise the CI/CD Pipeline (Doc section B, steps 16–22)
+
+- [ ] **4.1** `git pull` to fetch the workflow file Azure added
+- [ ] **4.2** `git checkout -b development`; screenshot the terminal
+- [ ] **4.3** Edit `index.html` to `<h1>Hello World!<h1>`; screenshot the diff
+- [ ] **4.4** `git add --all` / `git commit -m "development branch"` / `git push -f origin development`; screenshot terminal
+- [ ] **4.5** Screenshot: GitHub prompting **Compare & pull request**
+- [ ] **4.6** Open the PR — screenshot the Azure SWA preview-environment comment
+- [ ] **4.7** Merge the PR, confirm merge; screenshot
+- [ ] **4.8** Screenshot: **Actions** tab with all workflow runs green
+
+## Phase 5 — Verify the Deployment (Doc section B, steps 23–24)
+
+- [ ] **5.1** Azure Portal → Static Web Apps → `HOS08`; screenshot
+- [ ] **5.2** Open the production URL; screenshot showing **Hello World!** — proof the pipeline shipped the change
+
+## Phase 6 — Documentation Deliverable
+
+- [ ] **6.1** Assemble a Word document with every step and its screenshot
+- [ ] **6.2** Write `README.md` with pipeline architecture and a summary of what was learned
+- [ ] **6.3** Verify the `.docx` renders correctly (convert to PDF and inspect the pages)
+
+## Phase 7 — Submit
+
+- [ ] **7.1** Push source, workflow, screenshots and docs to `M7MDRAUF/HOS08`
+- [ ] **7.2** Push the deliverable to `cityuseattle/cs504-hos08-M7MDRAUF`
+- [ ] **7.3** Verify no `Co-Authored-By` / AI trailer on any commit in either repo
+
+## Phase 8 — Cleanup (Doc section B, steps 25–28)
+
+> Destructive and irreversible. **Runs only after the student confirms**, and only after every screenshot in Phases 2–5 is captured.
+
+- [ ] **8.1** Confirm with the student that teardown may proceed
+- [ ] **8.2** Azure Portal → Static Web Apps → `HOS08` → **Delete** → **Yes**; screenshot
+- [ ] **8.3** Delete resource group `HOS08_group` so nothing bills
+- [ ] **8.4** Screenshot: resource list empty
+
+---
+
+## Risk Register
+
+| Risk | Mitigation |
+|---|---|
+| Wrong plan tier → account charged | Plan tier is verified on the Review+Create blade before clicking Create |
+| Azure resource left running after grading | Phase 8 teardown, gated on student confirmation |
+| `git push -f` on `development` | Only ever targets `development`, never `main` |
+| Azure's GitHub authorization not yet granted | Handled interactively in the portal during Phase 2.5 |
+| AI attribution leaking into commits | Local `user.name`/`user.email` pinned to the student; trailer audit in Phase 7.3 |
