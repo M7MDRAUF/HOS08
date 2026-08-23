@@ -56,10 +56,10 @@ The workflow has two jobs:
 
 | # | Trigger | Branch | Result |
 |---|---|---|---|
-| 1 | Commit `4e2dfef` — Azure adds the workflow file | `main` |  success (51s) |
-| 2 | PR #1 opened | `development` |  success (1m 8s) |
-| 3 | PR #1 closed | `development` |  success (29s) |
-| 4 | Merge commit `fd470f2` | `main` |  success (1m 1s) |
+| 1 | Commit `4e2dfef` — Azure adds the workflow file | `main` | Success (51s) |
+| 2 | PR #1 opened | `development` | Success (1m 8s) |
+| 3 | PR #1 closed | `development` | Success (29s) |
+| 4 | Merge commit `fd470f2` | `main` | Success (1m 1s) |
 
 Run #4 is the proof: `index.html` changed from `<h1>Hello</h1>` to
 `<h1>Hello World!</h1>` on a branch, and that change appeared on the public URL with no
@@ -109,8 +109,9 @@ az group delete --name HOS08_group --yes
 ├── .github/workflows/     Azure-generated GitHub Actions pipeline
 ├── docs/
 │   ├── PLAN.md            Phase-by-phase execution plan for this assignment
-│   └── HOS08A-CICD-Submission.docx   Illustrated report
-├── screenshots/           25 numbered screenshots, in execution order
+│   ├── HOS08A-CICD-Submission.docx   Illustrated report (26 pages, 28 figures)
+│   └── HOS08A-CICD-Submission.pdf    PDF rendering of the report
+├── screenshots/           28 numbered screenshots, in execution order
 ├── index.html             The static site
 └── README.md
 ```
