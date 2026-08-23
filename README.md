@@ -52,10 +52,10 @@ The workflow has two jobs:
 
 | # | Trigger | Branch | Result |
 |---|---|---|---|
-| 1 | Commit `4e2dfef` — Azure adds the workflow file | `main` | ✅ success (51s) |
-| 2 | PR #1 opened | `development` | ✅ success (1m 8s) |
-| 3 | PR #1 closed | `development` | ✅ success (29s) |
-| 4 | Merge commit `fd470f2` | `main` | ✅ success (1m 1s) |
+| 1 | Commit `4e2dfef` — Azure adds the workflow file | `main` |  success (51s) |
+| 2 | PR #1 opened | `development` |  success (1m 8s) |
+| 3 | PR #1 closed | `development` |  success (29s) |
+| 4 | Merge commit `fd470f2` | `main` |  success (1m 1s) |
 
 Run #4 is the proof: `index.html` changed from `<h1>Hello</h1>` to
 `<h1>Hello World!</h1>` on a branch, and that change appeared on the public URL with no
